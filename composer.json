@@ -1,0 +1,24 @@
+{
+    "name": "simtel/psr14-example",
+    "description": "psr-14 example",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Simtel",
+            "email": "simtel@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Simtel\\PSR14Example\\": "src/"
+        }
+    },
+    "require": {
+        "psr/event-dispatcher": "^1.0",
+        "psr/container": "^1.0",
+        "league/container": "^3.3"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    }
+}
