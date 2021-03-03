@@ -26,10 +26,11 @@ class App
     /**
      *
      */
-    public function execute() {
+    public function execute()
+    {
         $event = new EventOne();
         $this->eventDispatcher->dispatch($event);
-        var_dump($event);
+        return $event->cnt;
     }
 
 }

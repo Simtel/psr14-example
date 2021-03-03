@@ -18,4 +18,4 @@ $app = $container->get(App::class);
 
 var_dump($app);
 
-$app->execute();
+$app->execute(); //Event->cnt = 400;
