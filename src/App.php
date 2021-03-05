@@ -5,10 +5,17 @@ namespace Simtel\PSR14Example;
 
 
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
 use Simtel\PSR14Example\Events\EventOne;
+use Simtel\PSR14Example\Events\EventStoppable;
 
 class App
 {
+
+    public EventOne $eventOne;
+
+    public StoppableEventInterface $eventStop;
+
     /**
      * @var EventDispatcherInterface
      */
@@ -16,21 +23,29 @@ class App
 
     /**
      * App constructor.
-     * @param $eventDispatcher
+     * @param EventOne $event
+     * @param StoppableEventInterface $eventStop
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        EventOne $event,
+        StoppableEventInterface $eventStop,
+        EventDispatcherInterface $eventDispatcher
+    )
     {
+        $this->eventStop = $eventStop;
+        $this->eventOne = $event;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      *
      */
-    public function execute()
+    public function execute(): void
     {
-        $event = new EventOne();
-        $this->eventDispatcher->dispatch($event);
-        return $event->cnt;
+        $this->eventDispatcher->dispatch($this->eventOne);
+        $this->eventDispatcher->dispatch($this->eventStop);
+
     }
 
 }

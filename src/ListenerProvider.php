@@ -6,8 +6,10 @@ namespace Simtel\PSR14Example;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Simtel\PSR14Example\Events\EventOne;
+use Simtel\PSR14Example\Events\EventStoppable;
 use Simtel\PSR14Example\Listeners\EventOneListener;
 use Simtel\PSR14Example\Listeners\EventOneSecondListener;
+use Simtel\PSR14Example\Listeners\EventStopListener;
 
 class ListenerProvider implements ListenerProviderInterface
 {
@@ -16,6 +18,9 @@ class ListenerProvider implements ListenerProviderInterface
         EventOne::class => [
             EventOneListener::class,
             EventOneSecondListener::class
+        ],
+        EventStoppable::class => [
+            EventStopListener::class
         ]
     ];
 
@@ -24,6 +29,12 @@ class ListenerProvider implements ListenerProviderInterface
      */
     public function getListenersForEvent(object $event): iterable
     {
-        return $this->listen[get_class($event)];
+
+        foreach ($this->listen as $key => $listens) {
+            if ($event instanceof $key) {
+                return $listens;
+            }
+        }
+        return [];
     }
 }

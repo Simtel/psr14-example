@@ -6,6 +6,7 @@ namespace Simtel\PSR14Example;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
 use Simtel\PSR14Example\Contracts\ListenerInterface;
 
 class EventDispatcher implements EventDispatcherInterface
@@ -32,6 +33,9 @@ class EventDispatcher implements EventDispatcherInterface
 
         foreach ($this->provider->getListenersForEvent($event) as $listener) {
             /** @var ListenerInterface $handle */
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                break;
+            }
             $handle = new $listener($event);
             $handle->handle();
         }
