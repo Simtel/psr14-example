@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 use League\Container\Container;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -23,6 +23,7 @@ $container->add(StoppableEventInterface::class, EventStoppable::class);
 $container->add(EventDispatcherInterface::class, EventDispatcher::class)->addArgument(ListenerProviderInterface::class);
 $container->add(ListenerProviderInterface::class, ListenerProvider::class);
 
+/** @var App $app */
 $app = $container->get(App::class);
 
 var_dump($app);
@@ -31,8 +32,5 @@ $app->execute();
 
 var_dump(get_class($app->eventStop));
 
-
 var_dump($app->eventOne);
 var_dump($app->eventStop);
-
-

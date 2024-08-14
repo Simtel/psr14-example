@@ -1,6 +1,5 @@
 <?php
 
-
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\EventDispatcher\StoppableEventInterface;
 use Simtel\PSR14Example\App;
@@ -11,10 +10,9 @@ use Simtel\PSR14Example\ListenerProvider;
 
 class ExampleTest extends MockeryTestCase
 {
-
     public function testNormalWork(): void
     {
-        $app = new App (
+        $app = new App(
             new EventOne(),
             new EventStoppable(),
             new EventDispatcher(
@@ -39,7 +37,7 @@ class ExampleTest extends MockeryTestCase
             ->andReturn(false)
             ->getMock();
         $eventStop->shouldReceive('isModified')->andReturn(true);
-        $app = new App (
+        $app = new App(
             new EventOne(),
             $eventStop,
             new EventDispatcher(
@@ -55,5 +53,4 @@ class ExampleTest extends MockeryTestCase
         self::assertTrue($isModified);
 
     }
-
 }

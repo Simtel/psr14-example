@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Simtel\PSR14Example;
-
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Simtel\PSR14Example\Events\EventOne;
@@ -13,21 +11,24 @@ use Simtel\PSR14Example\Listeners\EventStopListener;
 
 class ListenerProvider implements ListenerProviderInterface
 {
-
+    /**
+     * @var array<string, array<class-string>>
+     */
     protected array $listen = [
         EventOne::class => [
             EventOneListener::class,
-            EventOneSecondListener::class
+            EventOneSecondListener::class,
         ],
         EventStoppable::class => [
-            EventStopListener::class
-        ]
+            EventStopListener::class,
+        ],
     ];
 
     /**
-     * @inheritDoc
+     * @param object $event
+     * @return class-string[]
      */
-    public function getListenersForEvent(object $event): iterable
+    public function getListenersForEvent(object $event): array
     {
 
         foreach ($this->listen as $key => $listens) {
@@ -35,6 +36,7 @@ class ListenerProvider implements ListenerProviderInterface
                 return $listens;
             }
         }
+
         return [];
     }
 }
