@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         run: composer install
       - name: PHPStan
-        run: vendor/bin/phpstan analyse
+        run: vendor/bin/phpstan analyse src --level=max
       - name: Pint
         run: vendor/bin/pint --test
   tests:
